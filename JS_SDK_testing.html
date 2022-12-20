@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Document</title>
+	<script>
+		rudderanalytics = window.rudderanalytics = [];
+
+		const methods = [
+			"load",
+			"page",
+			"track",
+			"identify",
+			"alias",
+			"group",
+			"ready",
+			"reset",
+			"getAnonymousId",
+			"setAnonymousId",
+		];
+
+		for (let i = 0; i < methods.length; i++) {
+			const method = methods[i];
+			rudderanalytics[method] = (function test(methodName) {
+				return function () {
+					rudderanalytics.push(
+						[methodName].concat(Array.prototype.slice.call(arguments))
+					);
+				};
+			})(method);
+		}
+
+		function load(writeKey, dataPlaneUrl) {
+			rudderanalytics.load(
+				writeKey,
+				dataPlaneUrl,
+			);
+		}
+
+		function page() {
+			rudderanalytics.page("category", "https://help.oncehub.com/help/creating-a-google-calendar-account-that-uses-your-business-email-address", {
+				path: "test-path",
+				url: "https://help.oncehub.com/help/creating-a-google-calendar-account-that-uses-your-business-email-address",
+				title: "title",
+				search: "search",
+				referrer: "https://help.oncehub.com/help/creating-a-google-calendar-account-that-uses-your-business-email-address",
+			});
+		}
+
+
+		function identify() {
+			rudderanalytics.identify("user004", {
+				firstName: "SandeepRudder",
+				lastName: "Rudderstack",
+				email: "sandeep@wwe.com",
+				phone: "",
+				gender: "m",
+				birthday: "19990101",
+				city: "London",
+				country: "England",
+				zip: "81929120",
+				foo: "bar"
+			}, {
+				company: {
+					name: "test",
+					address: "test"
+				}
+			});
+		}
+
+		function track() {
+			rudderanalytics.track('Product List Viewed', {
+				checkout_id: 'what is checkout id here??',
+				order_id: "transactionId",
+				value: 31.98,
+				revenue: 23.45,
+				shipping: 4.00,
+				coupon: 'APPARELSALE',
+				currency: 'GBP',
+				products: [
+					{
+						product_id: 'abc',
+						category: 'Merch',
+						name: 'Food/Drink',
+						brand: '',
+						variant: 'Extra topped',
+						price: 3.00,
+						quantity: 2,
+						currency: 'GBP',
+						position: 1,
+						value: 6.00,
+						typeOfProduct: 'Food',
+						url: 'https://www.example.com/product/bacon-jam',
+						image_url: 'https://www.example.com/product/bacon-jam.jpg'
+					},
+					{
+						product_id: 'abc',
+						category: 'Merch',
+						name: 'Food/Drink',
+						brand: '',
+						variant: 'Extra topped',
+						price: 3.00,
+						quantity: 2,
+						currency: 'GBP',
+						position: 1,
+						value: 6.00,
+						typeOfProduct: 'Food',
+						url: 'https://www.example.com/product/bacon-jam',
+						image_url: 'https://www.example.com/product/bacon-jam.jpg'
+					}
+				]
+			});
+		}
+
+		function orderCompleted() {
+			rudderanalytics.track('Order Completed', {
+				"customProp": "testProp",
+				checkout_id: 'what is checkout id here??',
+				event_id: 'purchaseId',
+				order_id: "transactionId",
+				value: 35.00,
+				//revenue: 31.98,
+				shipping: 4.00,
+				coupon: 'APPARELSALE',
+				currency: 'GBP',
+				// products: [],
+				products: [
+					{
+						"customPropProd": "testPropProd",
+						product_id: 'abc',
+						category: 'Merch',
+						name: 'Food/Drink',
+						brand: '',
+						variant: 'Extra topped',
+						price: 3.00,
+						quantity: 2,
+						currency: 'GBP',
+						position: 1,
+						value: 6.00,
+						typeOfProduct: 'Food',
+						url: 'https://www.example.com/product/bacon-jam',
+						image_url: 'https://www.example.com/product/bacon-jam.jpg'
+					}
+				]
+			});
+		}
+
+		function checkoutStarted() {
+			rudderanalytics.track('Initiate Checkout', {
+				checkout_id: 'what is checkout id here??',
+				//event_id: 'eventIDTest',
+				order_id: "transactionId",
+				value: 31.98,
+				//revenue: 31.98,
+				shipping: 4.00,
+				coupon: 'APPARELSALE',
+				currency: 'GBP',
+				products: [
+					{
+						product_id: 'abc',
+						category: 'Merch',
+						name: 'Food/Drink',
+						brand: '',
+						variant: 'Extra topped',
+						price: 3.00,
+						quantity: 2,
+						currency: 'GBP',
+						position: 1,
+						value: 6.00,
+						typeOfProduct: 'Food',
+						url: 'https://www.example.com/product/bacon-jam',
+						image_url: 'https://www.example.com/product/bacon-jam.jpg'
+					}
+				]
+			});
+		}
+
+		function productAdded() {
+			rudderanalytics.track("Product Added", {
+				// product_id: "123",
+				// sku: "F15",
+				category: "Games",
+				name: "Game",
+				brand: "Gamepro",
+				variant: "111",
+				price: 13.49,
+				quantity: 11,
+				coupon: "DISC21",
+				position: 1,
+				url: "https://www.website.com/product/path",
+				image_url: "https://www.website.com/product/path.png",
+			});
+		}
+	</script>
+
+	<script src="https://cdn.rudderlabs.com/v1.1/rudder-analytics.min.js"></script>
+
+
+</head>
+<body>
+<button onclick="page()">Page</button>
+<button onclick="identify()">Identify</button>
+<button onclick="track()">Product List Viewed</button>
+<button onclick="orderCompleted()">order completed</button>
+<button onclick="checkoutStarted()">Initiate Checkout</button>
+<button onclick="productAdded()">Product Added</button>
+</body>
+</html>
